@@ -1,12 +1,14 @@
 import axios from 'axios';
 
-// FORCE PRODUCTION URL - Updated for Render static deployment
-const API_BASE_URL = window.location.hostname === 'localhost' 
-  ? 'http://localhost:5000/api'
-  : 'https://stock-market-backend.onrender.com/api';
+// Use environment variable for API URL with fallback
+const API_BASE_URL = process.env.REACT_APP_API_URL || 
+  (window.location.hostname === 'localhost' 
+    ? 'http://localhost:5000/api'
+    : 'https://stock-market-backend.onrender.com/api');
 
-console.log('🚀 FORCED API BASE URL:', API_BASE_URL);
+console.log('🚀 API BASE URL:', API_BASE_URL);
 console.log('🌍 Current hostname:', window.location.hostname);
+console.log('🔧 Environment API URL:', process.env.REACT_APP_API_URL);
 
 const api = axios.create({
   baseURL: API_BASE_URL,

@@ -33,7 +33,8 @@ app.use(cors({
           'https://693b9504e2bd450008ff4259--animated-marshmallow-9bff49.netlify.app',
           'https://animated-marshmallow-9bff49.netlify.app',
           'https://stock-market-tracker-frontend.netlify.app',
-          'https://stock-market-tracker-frontend-wgz9.onrender.com'
+          'https://stock-market-tracker-frontend-wgz9.onrender.com',
+          'https://stock-market-frontend.onrender.com'
         ] 
       : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:5173'];
     

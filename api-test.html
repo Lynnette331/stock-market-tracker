@@ -15,7 +15,7 @@
             
             try {
                 // Test health endpoint
-                const healthResponse = await fetch('https://stock-market-tracker-backend.onrender.com/api/health');
+                const healthResponse = await fetch('https://stock-market-backend.onrender.com/api/health');
                 const healthData = await healthResponse.json();
                 
                 resultDiv.innerHTML = `
@@ -24,7 +24,7 @@
                 `;
                 
                 // Test if auth routes exist
-                const authTest = await fetch('https://stock-market-tracker-backend.onrender.com/api/auth/register', {
+                const authTest = await fetch('https://stock-market-backend.onrender.com/api/auth/register', {
                     method: 'OPTIONS'
                 });
                 
