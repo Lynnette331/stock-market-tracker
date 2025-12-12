@@ -189,10 +189,6 @@ cd frontend && npm test
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 - Alpha Vantage for providing free stock market data
@@ -201,7 +197,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Live Demo**: [Your Deployment URL Here]
+**Live Demo**: https://stock-market-tracker-frontend-wgz9.onrender.com
 
 **Author**: Your Name  
 **Contact**: your.email@example.com
