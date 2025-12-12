@@ -1,29 +1,15 @@
 import axios from 'axios';
 
-// Create axios instance with base configuration
-const getBaseURL = () => {
-  // Development check
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    console.log('🔧 Using development API URL');
-    return 'http://localhost:5000/api';
-  }
-  
-  // Production - use hardcoded URL to ensure it works
-  console.log('🚀 Using production API URL - FIXED VERSION v2');
-  return 'https://stock-market-tracker-backend.onrender.com/api';
-};
+// FORCE PRODUCTION URL - NO MORE ENVIRONMENT DETECTION ISSUES
+const API_BASE_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:5000/api'
+  : 'https://stock-market-tracker-backend.onrender.com/api';
 
-const baseURL = getBaseURL();
-console.log('Final API Base URL:', baseURL);
-
-// Temporary debug - remove after fix is confirmed
-if (typeof window !== 'undefined') {
-  console.log('🔍 DEBUG - Current hostname:', window.location.hostname);
-  console.log('🔍 DEBUG - Final API Base URL:', baseURL);
-}
+console.log('🚀 FORCED API BASE URL:', API_BASE_URL);
+console.log('🌍 Current hostname:', window.location.hostname);
 
 const api = axios.create({
-  baseURL: baseURL,
+  baseURL: API_BASE_URL,
   timeout: 10000,
   withCredentials: true,
   headers: {
@@ -34,11 +20,12 @@ const api = axios.create({
 // Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
-    console.log('API Request:', {
-      method: config.method,
-      url: config.url,
+    console.log('🔥 FINAL API REQUEST:', {
+      method: config.method?.toUpperCase(),
+      endpoint: config.url,
       baseURL: config.baseURL,
-      fullURL: `${config.baseURL}${config.url}`
+      FULL_URL: `${config.baseURL}${config.url}`,
+      timestamp: new Date().toLocaleTimeString()
     });
     
     const token = localStorage.getItem('token');
@@ -48,7 +35,7 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.error('Request interceptor error:', error);
+    console.error('❌ Request interceptor error:', error);
     return Promise.reject(error);
   }
 );
@@ -81,5 +68,12 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Test API configuration on load
+console.log('✅ API Instance Created:', {
+  baseURL: api.defaults.baseURL,
+  timeout: api.defaults.timeout,
+  withCredentials: api.defaults.withCredentials
+});
 
 export default api;
