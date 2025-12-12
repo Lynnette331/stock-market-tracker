@@ -26,8 +26,6 @@ const authReducer = (state, action) => {
     case 'LOGIN_SUCCESS':
     case 'REGISTER_SUCCESS':
       localStorage.setItem('token', action.payload.token);
-      // Set axios default authorization header
-      axios.defaults.headers.common['Authorization'] = `Bearer ${action.payload.token}`;
       return {
         ...state,
         user: action.payload.user,
@@ -39,7 +37,6 @@ const authReducer = (state, action) => {
     case 'LOGIN_FAILURE':
     case 'REGISTER_FAILURE':
       localStorage.removeItem('token');
-      delete axios.defaults.headers.common['Authorization'];
       return {
         ...state,
         user: null,
@@ -50,7 +47,6 @@ const authReducer = (state, action) => {
     
     case 'LOGOUT':
       localStorage.removeItem('token');
-      delete axios.defaults.headers.common['Authorization'];
       return {
         ...state,
         user: null,
@@ -69,7 +65,6 @@ const authReducer = (state, action) => {
     
     case 'LOAD_USER_FAILURE':
       localStorage.removeItem('token');
-      delete axios.defaults.headers.common['Authorization'];
       return {
         ...state,
         user: null,
@@ -105,9 +100,6 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       
       if (token) {
-        // Set axios default authorization header
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
         try {
           const response = await api.get('/auth/profile');
           dispatch({
