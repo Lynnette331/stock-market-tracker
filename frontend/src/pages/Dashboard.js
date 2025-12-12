@@ -8,6 +8,7 @@ import StockChart from '../components/StockChart';
 const StockComparisonWidget = () => {
   const { loading } = useStock();
   const [comparisonData, setComparisonData] = useState([]);
+  const [selectedStocks] = useState(['AAPL', 'GOOGL', 'MSFT']);
   const [timeRange, setTimeRange] = useState('1Y');
 
   useEffect(() => {

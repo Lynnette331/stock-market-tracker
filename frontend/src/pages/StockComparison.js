@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useStock } from '../context/StockContext';
 import StockChart from '../components/StockChart';
 import LoadingSpinner from '../components/LoadingSpinner';
