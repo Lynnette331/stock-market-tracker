@@ -5,7 +5,9 @@ const getBaseURL = () => {
   // Check if we have the environment variable
   if (process.env.REACT_APP_API_URL) {
     console.log('Using REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
-    return process.env.REACT_APP_API_URL;
+    // Ensure the API URL ends with /api
+    const apiUrl = process.env.REACT_APP_API_URL;
+    return apiUrl.endsWith('/api') ? apiUrl : `${apiUrl}/api`;
   }
   
   // Production fallback
@@ -25,6 +27,7 @@ console.log('Final API Base URL:', baseURL);
 const api = axios.create({
   baseURL: baseURL,
   timeout: 10000,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },

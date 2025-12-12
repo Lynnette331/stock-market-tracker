@@ -26,6 +26,8 @@ app.use('/api/', limiter);
 // CORS configuration
 app.use(cors({
   origin: function (origin, callback) {
+    console.log('CORS check for origin:', origin);
+    
     const allowedOrigins = process.env.NODE_ENV === 'production' 
       ? [
           'https://693b9504e2bd450008ff4259--animated-marshmallow-9bff49.netlify.app',
@@ -35,29 +37,48 @@ app.use(cors({
       : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:5173'];
     
     // Allow requests with no origin (like mobile apps or Postman)
-    if (!origin) return callback(null, true);
+    if (!origin) {
+      console.log('CORS: Allowing request with no origin');
+      return callback(null, true);
+    }
     
     // Check if origin is allowed or matches Netlify pattern
     if (allowedOrigins.indexOf(origin) !== -1 || (origin && origin.match(/.*\.netlify\.app$/))) {
+      console.log('CORS: Allowing origin:', origin);
       return callback(null, true);
     } else {
       console.log('CORS blocked origin:', origin);
-      return callback(new Error('Not allowed by CORS'), false);
+      console.log('Allowed origins:', allowedOrigins);
+      return callback(new Error(`CORS policy violation: Origin ${origin} not allowed`), false);
     }
   },
   credentials: true,
   optionsSuccessStatus: 200,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'],
   allowedHeaders: [
     'Origin',
     'X-Requested-With', 
     'Content-Type', 
     'Accept',
     'Authorization',
-    'Access-Control-Allow-Credentials'
+    'Access-Control-Allow-Credentials',
+    'Access-Control-Allow-Origin',
+    'Access-Control-Allow-Methods',
+    'Access-Control-Allow-Headers'
   ],
-  preflightContinue: false
+  preflightContinue: false,
+  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar']
 }));
+
+// Handle preflight requests
+app.options('*', (req, res) => {
+  console.log('Preflight request received for:', req.originalUrl);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH, HEAD');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
+  res.sendStatus(200);
+});
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
