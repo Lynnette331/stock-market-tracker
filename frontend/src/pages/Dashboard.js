@@ -6,9 +6,8 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import StockChart from '../components/StockChart';
 
 const StockComparisonWidget = () => {
-  const { getStockHistory, compareStocks, loading } = useStock();
+  const { loading } = useStock();
   const [comparisonData, setComparisonData] = useState([]);
-  const [selectedStocks, setSelectedStocks] = useState(['AAPL', 'GOOGL', 'MSFT']);
   const [timeRange, setTimeRange] = useState('1Y');
 
   useEffect(() => {

@@ -20,7 +20,7 @@ const StockSearch = () => {
   const [stockQuantity, setStockQuantity] = useState('1');
   const [purchasePrice, setPurchasePrice] = useState('');
   const [searchPerformed, setSearchPerformed] = useState(false);
-  const [suggestions, setSuggestions] = useState([]);
+
 
   // Popular stocks for suggestions
   const popularStocks = [

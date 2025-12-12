@@ -96,7 +96,7 @@ const StockComparison = () => {
     if (selectedStocks.length >= 2) {
       handleCompare();
     }
-  }, [selectedStocks, period]);
+  }, [selectedStocks, period, handleCompare]);
 
   const getPerformanceColor = (value) => {
     return value >= 0 ? 'text-green-600' : 'text-red-600';

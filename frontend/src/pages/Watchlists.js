@@ -281,16 +281,6 @@ const Watchlists = () => {
     }
   };
 
-  const handleRemoveStock = async (watchlistId, stockId) => {
-    if (window.confirm('Are you sure you want to remove this stock?')) {
-      try {
-        await removeStockFromWatchlist(watchlistId, stockId);
-      } catch (error) {
-        console.error('Error removing stock:', error);
-      }
-    }
-  };
-
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
