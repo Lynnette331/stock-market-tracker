@@ -36,7 +36,14 @@ const auth = async (req, res, next) => {
     next();
     
   } catch (error) {
-    console.error('Authentication error:', error.message);
+    console.error('❌ Authentication error details:', {
+      message: error.message,
+      name: error.name,
+      jwtSecretExists: !!process.env.JWT_SECRET,
+      jwtSecretLength: process.env.JWT_SECRET?.length || 0,
+      token: token ? 'exists' : 'missing',
+      stack: error.stack
+    });
     
     if (error.name === 'JsonWebTokenError') {
       return res.status(401).json({

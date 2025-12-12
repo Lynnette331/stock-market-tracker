@@ -55,11 +55,23 @@ router.get('/', auth, async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Get watchlists error:', error);
+    console.error('❌ Get watchlists error details:', {
+      message: error.message,
+      name: error.name,
+      code: error.code,
+      stack: error.stack,
+      userId: req.user?.id,
+      userExists: !!req.user
+    });
     res.status(500).json({
       success: false,
       message: 'Error fetching watchlists',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      error: error.message, // Temporarily show errors for debugging
+      errorDetails: {
+        name: error.name,
+        code: error.code,
+        userId: req.user?.id
+      }
     });
   }
 });
