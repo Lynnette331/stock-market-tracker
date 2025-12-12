@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useStock } from '../context/StockContext';
 import LoadingSpinner from '../components/LoadingSpinner';
-import StockChart from '../components/StockChart';
 
 const MarketOverviewChart = () => {
   const [marketData, setMarketData] = useState([]);
@@ -189,8 +188,7 @@ const Watchlists = () => {
     createWatchlist,
     updateWatchlist,
     deleteWatchlist,
-    addStockToWatchlist,
-    removeStockFromWatchlist
+    addStockToWatchlist
   } = useStock();
 
   const [showCreateModal, setShowCreateModal] = useState(false);

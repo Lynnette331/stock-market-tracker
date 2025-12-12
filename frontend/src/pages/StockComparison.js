@@ -75,7 +75,7 @@ const StockComparison = () => {
   };
 
   // Compare selected stocks
-  const handleCompare = async () => {
+  const handleCompare = useCallback(async () => {
     if (selectedStocks.length < 2) {
       alert('Please select at least 2 stocks to compare');
       return;
@@ -89,7 +89,7 @@ const StockComparison = () => {
       console.error('Comparison error:', error);
       alert('Failed to load comparison data');
     }
-  };
+  }, [selectedStocks, period, compareStocks]);
 
   // Auto-compare when stocks or period changes
   useEffect(() => {
