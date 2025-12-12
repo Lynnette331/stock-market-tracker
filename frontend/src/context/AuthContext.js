@@ -1,14 +1,8 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 // Create Auth Context
 const AuthContext = createContext();
-
-// API Base URL
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000/api';
-
-// Configure axios defaults
-axios.defaults.baseURL = API_URL;
 
 // Initial state
 const initialState = {
@@ -115,7 +109,7 @@ export const AuthProvider = ({ children }) => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         
         try {
-          const response = await axios.get('/auth/profile');
+          const response = await api.get('/auth/profile');
           dispatch({
             type: 'LOAD_USER_SUCCESS',
             payload: response.data.data.user
@@ -140,7 +134,7 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: 'LOGIN_START' });
     
     try {
-      const response = await axios.post('/auth/login', { email, password });
+      const response = await api.post('/auth/login', { email, password });
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: response.data.data
@@ -161,7 +155,7 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: 'REGISTER_START' });
     
     try {
-      const response = await axios.post('/auth/register', userData);
+      const response = await api.post('/auth/register', userData);
       dispatch({
         type: 'REGISTER_SUCCESS',
         payload: response.data.data
@@ -185,7 +179,7 @@ export const AuthProvider = ({ children }) => {
   // Update user profile
   const updateProfile = async (profileData) => {
     try {
-      const response = await axios.put('/auth/profile', profileData);
+      const response = await api.put('/auth/profile', profileData);
       dispatch({
         type: 'UPDATE_USER',
         payload: response.data.data.user
@@ -200,7 +194,7 @@ export const AuthProvider = ({ children }) => {
   // Update user preferences
   const updatePreferences = async (preferences) => {
     try {
-      const response = await axios.put('/users/preferences', { preferences });
+      const response = await api.put('/users/preferences', { preferences });
       dispatch({
         type: 'UPDATE_USER',
         payload: { preferences: response.data.data.preferences }
