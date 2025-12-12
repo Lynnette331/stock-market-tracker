@@ -89,9 +89,42 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // MongoDB connection
+console.log('🔗 Attempting MongoDB connection...');
+console.log('📍 MongoDB URI exists:', !!process.env.MONGODB_URI);
+console.log('📍 MongoDB URI starts with mongodb:', process.env.MONGODB_URI?.startsWith('mongodb'));
+
 mongoose.connect(process.env.MONGODB_URI)
-.then(() => console.log('✅ MongoDB connected successfully'))
-.catch((err) => console.error('❌ MongoDB connection error:', err));
+.then(() => {
+  console.log('✅ MongoDB connected successfully');
+  console.log('📊 Connection details:', {
+    host: mongoose.connection.host,
+    port: mongoose.connection.port,
+    name: mongoose.connection.name,
+    readyState: mongoose.connection.readyState
+  });
+})
+.catch((err) => {
+  console.error('❌ MongoDB connection error:', err.message);
+  console.error('🔍 Error details:', {
+    name: err.name,
+    code: err.code,
+    codeName: err.codeName,
+    message: err.message
+  });
+});
+
+// MongoDB connection event listeners
+mongoose.connection.on('error', (err) => {
+  console.error('❌ MongoDB runtime error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.warn('⚠️  MongoDB disconnected');
+});
+
+mongoose.connection.on('reconnected', () => {
+  console.log('🔄 MongoDB reconnected');
+});
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
