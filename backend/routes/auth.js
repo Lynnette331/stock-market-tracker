@@ -126,7 +126,12 @@ router.post('/register', [
     res.status(500).json({
       success: false,
       message: 'Error creating user account',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+      error: error.message, // Temporarily show errors in production for debugging
+      errorDetails: {
+        name: error.name,
+        code: error.code,
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      }
     });
   }
 });
