@@ -27,7 +27,6 @@ app.use('/api/', limiter);
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
     ? [
-        'https://Stock-market-frontend-lynnette331.onrender.com', 
         'https://693b9504e2bd450008ff4259--animated-marshmallow-9bff49.netlify.app',
         'https://animated-marshmallow-9bff49.netlify.app'
       ] 
