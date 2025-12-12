@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: stock-market-backend
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        fromDatabase:
+          name: mongodb
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ALPHA_VANTAGE_API_KEY
+        value: demo
+
+  - type: web
+    name: stock-market-frontend
+    env: static
+    region: oregon  
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://stock-market-backend.onrender.com/api
+
+databases:
+  - name: mongodb
+    databaseName: stocktracker
+    user: cs195-user

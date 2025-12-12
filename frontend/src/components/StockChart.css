@@ -1,0 +1,205 @@
+/* Chart Component Styles */
+.chart-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.chart-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  border: 2px dashed #e5e7eb;
+}
+
+.chart-loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #e5e7eb;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.chart-empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  border: 2px dashed #e5e7eb;
+}
+
+.chart-empty-icon {
+  margin: 0 auto 1rem;
+  width: 32px;
+  height: 32px;
+  color: #9ca3af;
+}
+
+.chart-empty-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.chart-empty-description {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* Comparison Chart Styles */
+.comparison-chart-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.comparison-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Chart Controls */
+.chart-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 8px;
+}
+
+.chart-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.chart-control-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.chart-control-buttons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.chart-control-button {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #6b7280;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chart-control-button:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.chart-control-button.active {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chart-container {
+    padding: 1rem;
+  }
+  
+  .comparison-chart-container {
+    padding: 1.5rem;
+  }
+  
+  .chart-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .chart-control-buttons {
+    justify-content: center;
+  }
+  
+  .comparison-legend {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Chart Tooltip Styles */
+.chartjs-tooltip {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: none !important;
+  border-radius: 6px !important;
+  font-family: inherit !important;
+}
+
+.chartjs-tooltip-title {
+  font-weight: 600 !important;
+  margin-bottom: 4px !important;
+}
+
+.chartjs-tooltip-body {
+  font-size: 13px !important;
+}
