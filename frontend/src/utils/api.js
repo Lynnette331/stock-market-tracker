@@ -9,12 +9,18 @@ const getBaseURL = () => {
   }
   
   // Production - use hardcoded URL to ensure it works
-  console.log('🚀 Using production API URL');
+  console.log('🚀 Using production API URL - FIXED VERSION v2');
   return 'https://stock-market-tracker-backend.onrender.com/api';
 };
 
 const baseURL = getBaseURL();
 console.log('Final API Base URL:', baseURL);
+
+// Temporary debug - remove after fix is confirmed
+if (typeof window !== 'undefined') {
+  console.log('🔍 DEBUG - Current hostname:', window.location.hostname);
+  console.log('🔍 DEBUG - Final API Base URL:', baseURL);
+}
 
 const api = axios.create({
   baseURL: baseURL,
