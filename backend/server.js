@@ -28,10 +28,15 @@ app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
     ? [
         'https://693b9504e2bd450008ff4259--animated-marshmallow-9bff49.netlify.app',
-        'https://animated-marshmallow-9bff49.netlify.app'
+        'https://animated-marshmallow-9bff49.netlify.app',
+        /.*\.netlify\.app$/,  // Allow all Netlify subdomains
+        'https://stock-market-tracker-frontend.netlify.app'
       ] 
     : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:5173'],
-  credentials: true
+  credentials: true,
+  optionsSuccessStatus: 200, // For legacy browser support
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Body parsing middleware
