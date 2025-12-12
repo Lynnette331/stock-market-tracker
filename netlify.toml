@@ -1,7 +1,14 @@
 [build.environment]
   NODE_VERSION = "18.20.4"
+  REACT_APP_API_URL = "https://stock-market-tracker-backend.onrender.com/api"
 
 [build]
   base = "frontend/"
   command = "npm run build"
   publish = "build/"
+
+# Redirect all non-file requests to index.html for React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

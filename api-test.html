@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>Stock Market API Test</h1>
+    <button onclick="testAPI()">Test API Connection</button>
+    <div id="result"></div>
+
+    <script>
+        async function testAPI() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                // Test health endpoint
+                const healthResponse = await fetch('https://stock-market-tracker-backend.onrender.com/api/health');
+                const healthData = await healthResponse.json();
+                
+                resultDiv.innerHTML = `
+                    <h3>✅ API Health Check:</h3>
+                    <pre>${JSON.stringify(healthData, null, 2)}</pre>
+                `;
+                
+                // Test if auth routes exist
+                const authTest = await fetch('https://stock-market-tracker-backend.onrender.com/api/auth/register', {
+                    method: 'OPTIONS'
+                });
+                
+                resultDiv.innerHTML += `
+                    <h3>Auth Route OPTIONS Response:</h3>
+                    <p>Status: ${authTest.status}</p>
+                `;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <h3>❌ Error:</h3>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

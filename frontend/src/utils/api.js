@@ -2,6 +2,12 @@ import axios from 'axios';
 
 // Create axios instance with base configuration
 const getBaseURL = () => {
+  console.log('Environment check:', {
+    NODE_ENV: process.env.NODE_ENV,
+    REACT_APP_API_URL: process.env.REACT_APP_API_URL,
+    hostname: window.location.hostname
+  });
+  
   // Check if we have the environment variable
   if (process.env.REACT_APP_API_URL) {
     console.log('Using REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
@@ -36,6 +42,13 @@ const api = axios.create({
 // Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
+    console.log('API Request:', {
+      method: config.method,
+      url: config.url,
+      baseURL: config.baseURL,
+      fullURL: `${config.baseURL}${config.url}`
+    });
+    
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -43,14 +56,31 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    console.error('Request interceptor error:', error);
     return Promise.reject(error);
   }
 );
 
 // Response interceptor for error handling
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log('API Response success:', {
+      status: response.status,
+      url: response.config.url,
+      data: response.data
+    });
+    return response;
+  },
   (error) => {
+    console.error('API Response error:', {
+      status: error.response?.status,
+      url: error.config?.url,
+      baseURL: error.config?.baseURL,
+      fullURL: error.config ? `${error.config.baseURL}${error.config.url}` : 'unknown',
+      message: error.message,
+      response: error.response?.data
+    });
+    
     if (error.response?.status === 401) {
       // Token expired or invalid
       localStorage.removeItem('token');
