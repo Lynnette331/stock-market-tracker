@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// FORCE PRODUCTION URL - NO MORE ENVIRONMENT DETECTION ISSUES
+// FORCE PRODUCTION URL - Updated for Render static deployment
 const API_BASE_URL = window.location.hostname === 'localhost' 
   ? 'http://localhost:5000/api'
-  : 'https://stock-market-tracker-backend.onrender.com/api';
+  : 'https://stock-market-backend.onrender.com/api';
 
 console.log('🚀 FORCED API BASE URL:', API_BASE_URL);
 console.log('🌍 Current hostname:', window.location.hostname);
