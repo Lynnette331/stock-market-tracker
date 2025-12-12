@@ -1,11 +1,23 @@
 import axios from 'axios';
 
 // Create axios instance with base configuration
+const getBaseURL = () => {
+  // Check if we have the environment variable
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  
+  // Production fallback
+  if (window.location.hostname.includes('netlify.app') || process.env.NODE_ENV === 'production') {
+    return 'https://stock-market-tracker-backend.onrender.com/api';
+  }
+  
+  // Development default
+  return 'http://localhost:5000/api';
+};
+
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 
-           (process.env.NODE_ENV === 'production' 
-            ? 'https://stock-market-tracker-backend.onrender.com/api'
-            : 'http://localhost:5000/api'),
+  baseURL: getBaseURL(),
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

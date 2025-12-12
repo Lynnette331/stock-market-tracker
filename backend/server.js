@@ -25,18 +25,38 @@ app.use('/api/', limiter);
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? [
-        'https://693b9504e2bd450008ff4259--animated-marshmallow-9bff49.netlify.app',
-        'https://animated-marshmallow-9bff49.netlify.app',
-        /.*\.netlify\.app$/,  // Allow all Netlify subdomains
-        'https://stock-market-tracker-frontend.netlify.app'
-      ] 
-    : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:5173'],
+  origin: function (origin, callback) {
+    const allowedOrigins = process.env.NODE_ENV === 'production' 
+      ? [
+          'https://693b9504e2bd450008ff4259--animated-marshmallow-9bff49.netlify.app',
+          'https://animated-marshmallow-9bff49.netlify.app',
+          'https://stock-market-tracker-frontend.netlify.app'
+        ] 
+      : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:5173'];
+    
+    // Allow requests with no origin (like mobile apps or Postman)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is allowed or matches Netlify pattern
+    if (allowedOrigins.indexOf(origin) !== -1 || (origin && origin.match(/.*\.netlify\.app$/))) {
+      return callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      return callback(new Error('Not allowed by CORS'), false);
+    }
+  },
   credentials: true,
-  optionsSuccessStatus: 200, // For legacy browser support
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: [
+    'Origin',
+    'X-Requested-With', 
+    'Content-Type', 
+    'Accept',
+    'Authorization',
+    'Access-Control-Allow-Credentials'
+  ],
+  preflightContinue: false
 }));
 
 // Body parsing middleware
