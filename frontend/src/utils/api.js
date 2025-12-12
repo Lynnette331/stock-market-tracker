@@ -4,7 +4,7 @@ import axios from 'axios';
 const API_BASE_URL = process.env.REACT_APP_API_URL || 
   (window.location.hostname === 'localhost' 
     ? 'http://localhost:5000/api'
-    : 'https://stock-market-backend.onrender.com/api');
+    : 'https://stock-market-tracker-backend.onrender.com/api');
 
 console.log('🚀 API BASE URL:', API_BASE_URL);
 console.log('🌍 Current hostname:', window.location.hostname);

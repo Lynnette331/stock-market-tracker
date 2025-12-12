@@ -31,7 +31,7 @@ services:
     staticPublishPath: build
     envVars:
       - key: REACT_APP_API_URL
-        value: https://stock-market-backend.onrender.com/api
+        value: https://stock-market-tracker-backend.onrender.com/api
 
 databases:
   - name: mongodb
