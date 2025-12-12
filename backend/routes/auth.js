@@ -98,11 +98,35 @@ router.post('/register', [
     });
 
   } catch (error) {
-    console.error('Registration error:', error);
+    console.error('❌ Registration error details:', {
+      message: error.message,
+      name: error.name,
+      code: error.code,
+      stack: error.stack,
+      mongooseError: error.name === 'ValidationError' ? error.errors : null
+    });
+    
+    // Send more specific error messages
+    if (error.name === 'ValidationError') {
+      const validationErrors = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        errors: validationErrors
+      });
+    }
+    
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'User with this email or username already exists'
+      });
+    }
+    
     res.status(500).json({
       success: false,
       message: 'Error creating user account',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
     });
   }
 });

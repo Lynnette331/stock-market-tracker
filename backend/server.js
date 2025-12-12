@@ -133,8 +133,38 @@ app.get('/api/health', (req, res) => {
     message: 'API is healthy',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
-    mongoStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+    mongoStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    mongoReadyStates: {
+      0: 'disconnected',
+      1: 'connected', 
+      2: 'connecting',
+      3: 'disconnecting'
+    },
+    currentState: mongoose.connection.readyState
   });
+});
+
+// Database test endpoint
+app.get('/api/test-db', async (req, res) => {
+  try {
+    const User = require('./models/User');
+    const userCount = await User.countDocuments();
+    
+    res.json({
+      success: true,
+      message: 'Database connection working',
+      userCount,
+      mongoStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+    });
+  } catch (error) {
+    console.error('❌ Database test error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Database connection failed',
+      error: error.message,
+      mongoStatus: mongoose.connection.readyState
+    });
+  }
 });
 
 // API Routes
