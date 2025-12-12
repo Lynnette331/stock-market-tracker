@@ -140,14 +140,14 @@ stock-market-tracker/
 
 ## 🚀 Deployment
 
-### Frontend (Vercel)
+### Frontend 
 ```bash
 cd frontend
 npm run build
 # Deploy dist folder to Vercel
 ```
 
-### Backend (Railway)
+### Backend 
 ```bash
 cd backend
 # Push to Railway with environment variables configured
