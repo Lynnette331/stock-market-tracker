@@ -26,8 +26,12 @@ app.use('/api/', limiter);
 // CORS configuration
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://Stock-market-frontend-lynnette331.onrender.com', 'https://your-frontend-domain.vercel.app'] 
-    : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'],
+    ? [
+        'https://Stock-market-frontend-lynnette331.onrender.com', 
+        'https://693b9504e2bd450008ff4259--animated-marshmallow-9bff49.netlify.app',
+        'https://animated-marshmallow-9bff49.netlify.app'
+      ] 
+    : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:5173'],
   credentials: true
 }));
 
