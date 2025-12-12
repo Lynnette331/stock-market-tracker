@@ -167,42 +167,26 @@ app.get('/api/test-db', async (req, res) => {
   }
 });
 
+// Simple test route
+app.get('/api/test', (req, res) => {
+  res.json({
+    success: true,
+    message: 'API routes are working!',
+    timestamp: new Date().toISOString(),
+    availableRoutes: [
+      '/api/health',
+      '/api/test-db', 
+      '/api/auth/register',
+      '/api/auth/login'
+    ]
+  });
+});
+
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/stocks', stockRoutes);
 app.use('/api/watchlists', watchlistRoutes);
 app.use('/api/users', userRoutes);
-
-
-
-// Database check route
-app.get('/api/db-check', async (req, res) => {
-  try {
-    const User = require('./models/User');
-    const userCount = await User.countDocuments();
-    const users = await User.find({}).select('username email firstName lastName createdAt');
-    
-    res.json({
-      status: 'OK',
-      database: {
-        connected: mongoose.connection.readyState === 1,
-        name: mongoose.connection.name,
-        host: mongoose.connection.host,
-        port: mongoose.connection.port
-      },
-      users: {
-        count: userCount,
-        list: users
-      }
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: 'ERROR',
-      message: 'Database check failed',
-      error: error.message
-    });
-  }
-});
 
 // Root route
 app.get('/', (req, res) => {
