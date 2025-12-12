@@ -2,29 +2,15 @@ import axios from 'axios';
 
 // Create axios instance with base configuration
 const getBaseURL = () => {
-  console.log('Environment check:', {
-    NODE_ENV: process.env.NODE_ENV,
-    REACT_APP_API_URL: process.env.REACT_APP_API_URL,
-    hostname: window.location.hostname
-  });
-  
-  // Check if we have the environment variable
-  if (process.env.REACT_APP_API_URL) {
-    console.log('Using REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
-    // Ensure the API URL ends with /api
-    const apiUrl = process.env.REACT_APP_API_URL;
-    return apiUrl.endsWith('/api') ? apiUrl : `${apiUrl}/api`;
+  // Development check
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    console.log('🔧 Using development API URL');
+    return 'http://localhost:5000/api';
   }
   
-  // Production fallback
-  if (window.location.hostname.includes('netlify.app') || process.env.NODE_ENV === 'production') {
-    console.log('Using production fallback URL for hostname:', window.location.hostname);
-    return 'https://stock-market-tracker-backend.onrender.com/api';
-  }
-  
-  // Development default
-  console.log('Using development URL');
-  return 'http://localhost:5000/api';
+  // Production - use hardcoded URL to ensure it works
+  console.log('🚀 Using production API URL');
+  return 'https://stock-market-tracker-backend.onrender.com/api';
 };
 
 const baseURL = getBaseURL();
