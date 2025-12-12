@@ -32,7 +32,8 @@ app.use(cors({
       ? [
           'https://693b9504e2bd450008ff4259--animated-marshmallow-9bff49.netlify.app',
           'https://animated-marshmallow-9bff49.netlify.app',
-          'https://stock-market-tracker-frontend.netlify.app'
+          'https://stock-market-tracker-frontend.netlify.app',
+          'https://stock-market-tracker-frontend-wgz9.onrender.com'
         ] 
       : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:5173'];
     
@@ -42,8 +43,10 @@ app.use(cors({
       return callback(null, true);
     }
     
-    // Check if origin is allowed or matches Netlify pattern
-    if (allowedOrigins.indexOf(origin) !== -1 || (origin && origin.match(/.*\.netlify\.app$/))) {
+    // Check if origin is allowed or matches Netlify/Render pattern
+    if (allowedOrigins.indexOf(origin) !== -1 || 
+        (origin && origin.match(/.*\.netlify\.app$/)) ||
+        (origin && origin.match(/.*\.onrender\.com$/))) {
       console.log('CORS: Allowing origin:', origin);
       return callback(null, true);
     } else {
